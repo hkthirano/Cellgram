@@ -1,5 +1,6 @@
 import Greet from "./greet";
 import ImageViewer from "./image-viewer";
+import LsButton from "./ls-button";
 
 export default function Home() {
   return (
@@ -7,6 +8,8 @@ export default function Home() {
       <Greet />
 
       <ImageViewer />
+
+      <LsButton />
     </main>
   );
 }
