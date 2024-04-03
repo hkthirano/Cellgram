@@ -1,6 +1,7 @@
 import Greet from "./greet";
 import ImageViewer from "./image-viewer";
 import LsButton from "./ls-button";
+import WasmSample from "./wasm-sample";
 
 export default function Home() {
   return (
@@ -10,6 +11,8 @@ export default function Home() {
       <ImageViewer />
 
       <LsButton />
+
+      <WasmSample />
     </main>
   );
 }
