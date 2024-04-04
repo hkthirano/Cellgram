@@ -1,15 +1,10 @@
-'use client'
-
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { invoke } from '@tauri-apps/api/tauri'
+import { IsDesktopContext } from './page';
 
 export default function LsButton() {
-    const [isDesktop, setIsDesktop] = useState(false);
-
-    useEffect(() => {
-        if (window.__TAURI__ !== undefined) setIsDesktop(true);
-    }, [])
+    const isDesktop = useContext(IsDesktopContext);
 
     const handleClick = () => {
         if (!isDesktop) return;
