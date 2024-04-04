@@ -1,12 +1,13 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use native_dialog::FileDialog;
+use std::process::Command;
+
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}!", name)
 }
-
-use std::process::Command;
 
 #[tauri::command]
 fn ls() -> String {
@@ -28,9 +29,15 @@ fn ls() -> String {
     return s;
 }
 
+#[tauri::command]
+fn open_dialog() {
+    let result = FileDialog::new().set_location("~").show_open_single_file();
+    println!("{:?}", result);
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, ls])
+        .invoke_handler(tauri::generate_handler![greet, ls, open_dialog])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

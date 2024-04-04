@@ -1,6 +1,7 @@
 import Greet from "./greet";
 import ImageViewer from "./image-viewer";
 import LsButton from "./ls-button";
+import OpenDialog from "./open_dialog";
 import WasmSample from "./wasm-sample";
 
 export default function Home() {
@@ -13,6 +14,8 @@ export default function Home() {
       <LsButton />
 
       <WasmSample />
+
+      <OpenDialog />
     </main>
   );
 }
