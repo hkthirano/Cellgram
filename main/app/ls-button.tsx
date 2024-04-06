@@ -1,13 +1,13 @@
 import Button from '@mui/material/Button';
 import { useContext } from 'react';
 import { invoke } from '@tauri-apps/api/tauri'
-import { IsDesktopContext } from './page';
+// import { IsDesktopContext } from './page';
 
 export default function LsButton() {
-    const isDesktop = useContext(IsDesktopContext);
+    // const isDesktop = useContext(IsDesktopContext);
 
     const handleClick = () => {
-        if (!isDesktop) return;
+        // if (!isDesktop) return;
 
         invoke<string>('ls')
             .then(result => console.log(result))

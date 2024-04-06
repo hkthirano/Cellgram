@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/tauri'
-import { IsDesktopContext } from './page';
+// import { IsDesktopContext } from './page';
 
 export default function Greet() {
-    const isDesktop = useContext(IsDesktopContext);
+    // const isDesktop = useContext(IsDesktopContext);
     const [greeting, setGreeting] = useState('init');
 
     useEffect(() => {
-        if (!isDesktop) return;
+        // if (!isDesktop) return;
 
         invoke<string>('greet', { name: 'Next.js' })
             .then(result => setGreeting(result))
