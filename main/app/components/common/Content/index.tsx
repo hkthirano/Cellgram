@@ -2,8 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import { IsDesktopContext } from "../Main";
 
 type Props = {
-    base64: string;
-    myImage: any;
+    imageData: any;
 }
 
 export default function Content(props: Props) {
@@ -14,12 +13,12 @@ export default function Content(props: Props) {
     useEffect(() => {
         if (isDesktop) {
             const canvas = canvasRef.current;
-            canvas.width = props.myImage[0];
-            canvas.height = props.myImage[1];
+            canvas.width = props.imageData[0];
+            canvas.height = props.imageData[1];
             const context = canvas.getContext('2d')!;
             const img = context.createImageData(canvas.width, canvas.height);
             for (let i = 0; i < img.data.length; i++) {
-                img.data[i] = props.myImage[2][i];
+                img.data[i] = props.imageData[2][i];
             }
             context.putImageData(img, 0, 0);
         }
@@ -30,7 +29,7 @@ export default function Content(props: Props) {
             <h1>Content</h1>
             {isDesktop ? 'Desktop' : 'Web'}
 
-            {isDesktop ? <canvas ref={canvasRef} /> : <img src={props.base64} />}
+            {props.imageData ? <canvas ref={canvasRef} /> : <img src={props.imageData} />}
         </div>
     );
 }

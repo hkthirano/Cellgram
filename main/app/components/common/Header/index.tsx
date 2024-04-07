@@ -7,8 +7,7 @@ import { IsDesktopContext } from '../Main';
 import { invoke } from '@tauri-apps/api/tauri';
 
 type Props = {
-    onSetBase64: (base64: string) => void;
-    onSetImage: (myImage: any) => void;
+    onSetImageData: (imageData: any) => void;
 }
 
 export default function Header(props: Props) {
@@ -26,10 +25,6 @@ export default function Header(props: Props) {
         setAnchorEl(null);
     };
 
-    const onProfileButtonClick = () => {
-        inputRef.current.click();
-    };
-
     const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
 
@@ -39,7 +34,7 @@ export default function Header(props: Props) {
         reader.readAsDataURL(fileObject);
         reader.onload = (e) => {
             const base64 = (e.currentTarget as any).result;
-            props.onSetBase64(base64);
+            props.onSetImageData(base64);
         }
 
         handleClose()
@@ -47,14 +42,14 @@ export default function Header(props: Props) {
 
     const onOpenImageClick = () => {
         if (isDesktop) {
-            invoke<number[]>('open_img').then(res => {
-                props.onSetImage(res);
+            invoke<number[]>('open_img').then(imageData => {
+                props.onSetImageData(imageData);
             }).catch(console.error);
 
             handleClose()
         }
         else {
-            onProfileButtonClick();
+            inputRef.current.click();
         }
     }
 
