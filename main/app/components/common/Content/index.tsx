@@ -1,3 +1,5 @@
+import styles from './Content.module.css';
+
 import { useContext, useEffect, useRef } from "react";
 import { IsDesktopContext } from "../Main";
 
@@ -22,14 +24,18 @@ export default function Content(props: Props) {
             }
             context.putImageData(img, 0, 0);
         }
-    }, [])
+        else {
+            const canvas = canvasRef.current;
+            canvas.width = props.imageData[0];
+            canvas.height = props.imageData[1];
+            const context = canvas.getContext('2d')!;
+            context.drawImage(props.imageData[2], 0, 0);
+        }
+    }, [props.imageData])
 
     return (
         <div>
-            <h1>Content</h1>
-            {isDesktop ? 'Desktop' : 'Web'}
-
-            {props.imageData ? <canvas ref={canvasRef} /> : <img src={props.imageData} />}
+            <canvas className={styles.canvas} ref={canvasRef} />
         </div>
     );
 }

@@ -34,7 +34,12 @@ export default function Header(props: Props) {
         reader.readAsDataURL(fileObject);
         reader.onload = (e) => {
             const base64 = (e.currentTarget as any).result;
-            props.onSetImageData(base64);
+
+            const image = new Image();
+            image.src = base64;
+            image.onload = () => {
+                props.onSetImageData([image.width, image.height, image]);
+            }
         }
 
         handleClose()
