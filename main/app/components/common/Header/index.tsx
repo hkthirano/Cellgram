@@ -2,13 +2,18 @@ import styles from './Header.module.css';
 
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import { IsDesktopContext } from '../Main';
+import { invoke } from '@tauri-apps/api/tauri';
 
 type Props = {
     onSetBase64: (base64: string) => void;
+    onSetImage: (myImage: any) => void;
 }
 
 export default function Header(props: Props) {
+    const isDesktop = useContext(IsDesktopContext);
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -40,6 +45,19 @@ export default function Header(props: Props) {
         handleClose()
     };
 
+    const onOpenImageClick = () => {
+        if (isDesktop) {
+            invoke<number[]>('open_img').then(res => {
+                props.onSetImage(res);
+            }).catch(console.error);
+
+            handleClose()
+        }
+        else {
+            onProfileButtonClick();
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div>
@@ -62,7 +80,7 @@ export default function Header(props: Props) {
                     }}
                 >
                     <input hidden ref={inputRef} type="file" onChange={onFileInputChange} />
-                    <MenuItem onClick={onProfileButtonClick}>Open</MenuItem>
+                    <MenuItem onClick={onOpenImageClick}>Open</MenuItem>
                 </Menu>
             </div>
 

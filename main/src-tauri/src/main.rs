@@ -1,8 +1,31 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use image::{self, GenericImageView, Rgba};
 use native_dialog::FileDialog;
-use std::process::Command;
+use std::{path::PathBuf, process::Command, result};
+
+#[tauri::command]
+fn open_img() -> (usize, usize, Vec<u8>) {
+    let result = FileDialog::new()
+        .set_location("~")
+        .show_open_single_file()
+        .unwrap();
+
+    match result {
+        Some(path) => return aaa(path),
+        None => return (0, 0, vec![]),
+    };
+
+    fn aaa(path: PathBuf) -> (usize, usize, Vec<u8>) {
+        let img = image::open(path).expect("Dimage");
+
+        let width = img.width() as usize;
+        let height = img.height() as usize;
+        let img_src = img.into_rgba8();
+        (width, height, img_src.to_vec())
+    }
+}
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -37,7 +60,7 @@ fn open_dialog() {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, ls, open_dialog])
+        .invoke_handler(tauri::generate_handler![greet, ls, open_dialog, open_img])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
