@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useContext, useRef, useState } from 'react';
 import { IsDesktopContext } from '../Main';
 import { invoke } from '@tauri-apps/api/tauri';
+import Link from 'next/link';
 
 type Props = {
     onSetImageData: (imageData: any) => void;
@@ -84,7 +85,9 @@ export default function Header(props: Props) {
                 </Menu>
             </div>
 
-            <Button variant="contained">Test</Button>
+            <Link href="/test">
+                <Button variant="contained">Test</Button>
+            </Link>
         </div>
     );
 }
