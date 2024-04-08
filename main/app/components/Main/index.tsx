@@ -1,5 +1,7 @@
 import { ChangeEvent, useContext, useRef } from 'react';
 
+import { invoke } from '@tauri-apps/api/tauri';
+
 import Header from '../Header';
 import { IsDesktopContext } from '../MainWrapper';
 import styles from './Main.module.css';
@@ -12,7 +14,9 @@ export default function Main() {
 
     const readImage = () => {
         if (isDesktop) {
-
+            invoke<any>('open_img').then(imageData => {
+                setImageDataForDesktop(imageData[0], imageData[1], imageData[2]);
+            }).catch(console.error);
         }
         else {
             inputRef.current.click();
@@ -33,12 +37,24 @@ export default function Main() {
             const image = new Image();
             image.src = base64;
             image.onload = () => {
-                onImageDataSet(image.width, image.height, image);
+                setImageDataForWeb(image.width, image.height, image);
             }
         }
     }
 
-    const onImageDataSet = (width: number, height: number, imageEl: HTMLImageElement) => {
+    const setImageDataForDesktop = (width: number, height: number, imageData: number[]) => {
+        const canvas = canvasRef.current;
+        canvas.width = width;
+        canvas.height = height
+        const context = canvas.getContext('2d')!;
+        const img = context.createImageData(canvas.width, canvas.height);
+        for (let i = 0; i < img.data.length; i++) {
+            img.data[i] = imageData[i];
+        }
+        context.putImageData(img, 0, 0);
+    }
+
+    const setImageDataForWeb = (width: number, height: number, imageEl: HTMLImageElement) => {
         const canvas = canvasRef.current;
         canvas.width = width;
         canvas.height = height;
