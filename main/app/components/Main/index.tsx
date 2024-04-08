@@ -1,9 +1,9 @@
 import { ChangeEvent, useContext, useRef } from 'react';
 
+import { IsDesktopContext } from '@/app/state';
 import { invoke } from '@tauri-apps/api/tauri';
 
 import Header from '../Header';
-import { IsDesktopContext } from '../MainWrapper';
 import styles from './Main.module.css';
 
 export default function Main() {

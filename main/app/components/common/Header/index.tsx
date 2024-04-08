@@ -1,11 +1,12 @@
-import styles from './Header.module.css';
-
-import { Button, IconButton, Menu, MenuItem } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
-import { useContext, useRef, useState } from 'react';
-import { IsDesktopContext } from '../../MainWrapper';
-import { invoke } from '@tauri-apps/api/tauri';
 import Link from 'next/link';
+import { useContext, useRef, useState } from 'react';
+
+import { IsDesktopContext } from '@/app/state';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Button, IconButton, Menu, MenuItem } from '@mui/material';
+import { invoke } from '@tauri-apps/api/tauri';
+
+import styles from './Header.module.css';
 
 type Props = {
     onSetImageData: (imageData: any) => void;
