@@ -1,9 +1,9 @@
 "use client"
 
-import Main from './components/common/Main';
+import MainWrapper from './components/MainWrapper';
 
 export default function Home() {
   return (
-    <Main />
+    <MainWrapper />
   );
 }

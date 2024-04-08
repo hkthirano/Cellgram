@@ -1,7 +1,7 @@
 import styles from './Content.module.css';
 
 import { useContext, useEffect, useRef } from "react";
-import { IsDesktopContext } from "../Main";
+import { IsDesktopContext } from "../../MainWrapper";
 
 type Props = {
     imageData: any;

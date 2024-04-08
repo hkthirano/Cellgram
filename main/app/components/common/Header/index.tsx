@@ -3,7 +3,7 @@ import styles from './Header.module.css';
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useContext, useRef, useState } from 'react';
-import { IsDesktopContext } from '../Main';
+import { IsDesktopContext } from '../../MainWrapper';
 import { invoke } from '@tauri-apps/api/tauri';
 import Link from 'next/link';
 
