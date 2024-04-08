@@ -1,16 +1,18 @@
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { Button, IconButton, Menu, MenuItem } from '@mui/material';
 
 import styles from './Header.module.css';
 
-export default function Header() {
+type Props = {
+  onOpenImageClick: () => void;
+}
+
+export default function Header(props: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
-  const inputRef = useRef<HTMLInputElement>(null!);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,9 +21,10 @@ export default function Header() {
     setAnchorEl(null);
   };
 
-  const onOpenImageClick = () => { }
-
-  const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { }
+  const onOpenImageClick = () => {
+    props.onOpenImageClick();
+    handleClose();
+  }
 
   return (
     <div className={styles.container}>
@@ -47,7 +50,6 @@ export default function Header() {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <input hidden ref={inputRef} type="file" onChange={onFileInputChange} />
           <MenuItem onClick={onOpenImageClick}>Open</MenuItem>
         </Menu>
       </div>
