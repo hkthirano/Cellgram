@@ -1,38 +1,9 @@
-import Link from 'next/link';
-
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-
-import styles from './sample.module.css';
+import SampleLayout from '../components/sample-layout';
 
 export default function Sample() {
     return (
-        <div>
-            <div className={styles.container}>
-                <Link href="/">
-                    <span className={styles.title}>Cellgram</span>
-                </Link>
-            </div>
-            <div className={styles['side-nav-container']}>
-                <List>
-                    <ListItem>
-                        <ListItemButton>
-                            <ListItemText primary="Menu 1"></ListItemText>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem>
-                        <ListItemButton>
-                            <ListItemText primary="Menu 2"></ListItemText>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem>
-                        <ListItemButton>
-                            <ListItemText primary="Menu 3"></ListItemText>
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-            </div>
-        </div>
+        <SampleLayout>
+            <div>content</div>
+        </SampleLayout>
     )
 }

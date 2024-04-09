@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import Main from './components/Main';
+import Main from './components/main';
 import { Provider } from './state';
 
 export default function Home() {

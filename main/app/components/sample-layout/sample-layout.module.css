@@ -9,6 +9,10 @@
     font-weight: bold;
 }
 
+.side-nav-and-conetent-container {
+    display: flex;
+}
+
 .side-nav-container {
     width: 200px;
 }
