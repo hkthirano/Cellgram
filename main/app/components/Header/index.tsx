@@ -54,8 +54,8 @@ export default function Header(props: Props) {
         </Menu>
       </div>
 
-      <Link href="/test">
-        <Button variant="contained">Test</Button>
+      <Link href="/sample">
+        <Button variant="contained">Sample</Button>
       </Link>
     </div>
   );
