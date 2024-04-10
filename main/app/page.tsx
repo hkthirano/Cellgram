@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import Main from './components/main';
+import Main2 from './components/main2';
 import { Provider } from './state';
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <Provider isDesktop={isDesktop}>
-      <Main />
+      <Main2 />
     </Provider>
   );
 }
