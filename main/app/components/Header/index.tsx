@@ -4,7 +4,7 @@ import { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Button, IconButton, Menu, MenuItem } from '@mui/material';
 
-import styles from './Header.module.css';
+import styles from './header.module.css';
 
 type Props = {
   onOpenImageClick: () => void;

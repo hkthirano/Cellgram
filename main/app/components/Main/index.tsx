@@ -4,7 +4,7 @@ import { IsDesktopContext } from '@/app/state';
 import { invoke } from '@tauri-apps/api/tauri';
 
 import Header from '../header';
-import styles from './Main.module.css';
+import styles from './main.module.css';
 
 export default function Main() {
     const isDesktop = useContext(IsDesktopContext);
