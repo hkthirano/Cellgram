@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>face detection wasm</title>
+</head>
+
+<body>
+    <video autoplay muted hidden id="v1"></video>
+    <canvas id="c1"></canvas>
+    <div id="fps"></div>
+    <input id="blocksize" type="range" min="4" max="32" step="2" value="8" />
+    <label for="blocksize">Block size: 8</label>
+    <script type="module">
+        import init, { setup, detect } from "./pkg/face_detection.js"
+        const onload = async () => {
+            await init();
+            setup();
+
+            const width = 320;
+            const height = 240;
+
+            const constraints = {
+                video: true,
+                faceingMode: { exact: "user" },
+                width: width,
+                height: height,
+            };
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            const video = document.querySelector("#v1");
+            video.srcObject = stream;
+            video.play();
+
+            const canvas = document.querySelector("#c1");
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext("2d");
+
+            let last_time;
+            const fps_div = document.querySelector("#fps");
+
+            const show_fps = () => {
+                if (!last_time) {
+                    last_time = performance.now();
+                    return;
+                }
+                let delta = (performance.now() - last_time) / 1000;
+                last_time = performance.now();
+                const fps = Math.floor(1 / delta);
+                fps_div.innerText = `FPS: ${fps}`;
+            };
+
+            const slider = document.querySelector("#blocksize");
+            const label = document.querySelector("label");
+            slider.oninput = () => {
+                label.innerText = `Block size: ${slider.value}`;
+            };
+
+            const draw_image = () => {
+                ctx.drawImage(video, 0, 0, width, height);
+                const rgba = ctx.getImageData(0, 0, width, height).data;
+                const block_size = slider.value;
+
+                detect(rgba, width, height, block_size).forEach((info) => {
+                    const top_ = info.x;
+                    const left_ = info.y;
+
+                    info.mosaic.forEach((row, j) => {
+                        row.cols.forEach((rgb, i) => {
+                            const x = top_ + i * block_size;
+                            const y = left_ + j * block_size;
+                            ctx.fillStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+                            ctx.fillRect(x, y, block_size, block_size);
+                        });
+                    });
+                });
+                show_fps();
+                requestAnimationFrame(draw_image);
+            };
+            draw_image();
+        };
+        window.addEventListener("DOMContentLoaded", onload);
+    </script>
+</body>
+
+</html>
